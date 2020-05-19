@@ -10,6 +10,9 @@ metadata:
     helm.sh/chart: {{ include "wiremock.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.ingress.extraLabels }}
+{{ toYaml .Values.ingress.extraLabels | indent 4 }}
+{{- end }}
 {{- with .Values.ingress.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}

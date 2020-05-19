@@ -8,6 +8,9 @@ metadata:
     helm.sh/chart: {{ include "wiremock.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.mappingsConfig.extraLabels }}
+{{ toYaml .Values.mappingsConfig.extraLabels | indent 4 }}
+{{- end }}
 data:
   {{- $files := .Files }}
   {{- range $key, $value := .Files }}

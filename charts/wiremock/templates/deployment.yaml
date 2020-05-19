@@ -7,12 +7,18 @@ metadata:
     helm.sh/chart: {{ include "wiremock.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.deployment.extraLabels }}
+{{ toYaml .Values.deployment.extraLabels | indent 4 }}
+{{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "wiremock.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Values.deployment.matchLables.extraLabels }}
+{{ toYaml .Values.deployment.matchLables.extraLabels | indent 6 }}
+{{- end }}
   template:
     metadata:
       annotations:
@@ -21,6 +27,9 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "wiremock.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Values.deployment.template.extralabels }}
+{{ toYaml .Values.deployment.template.extralabels | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

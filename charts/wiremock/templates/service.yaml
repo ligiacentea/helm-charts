@@ -7,6 +7,13 @@ metadata:
     helm.sh/chart: {{ include "wiremock.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.service.extraLabels }}
+{{ toYaml .Values.service.extraLabels | indent 4 }}
+{{- end }}
+{{- if .Values.service.annotations }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
+{{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
